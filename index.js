@@ -188,6 +188,11 @@ module.exports = function(options) {
         onFinish();
       });
 
+      busboy.on('error', function(error) {
+        if (options.onError) { options.onError(error, next); }
+        else next(error);
+      });
+
       /**
        * Pass the control to the next middleware in stack
        * only if the read and write stream are finished
